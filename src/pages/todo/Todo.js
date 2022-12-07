@@ -1,6 +1,24 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
 
 const Todo = () => {
+  const [todoText, setTodoText] = useState("");
+
+  // todo 생성
+  const createTodo = (e) => {
+    e.preventDefault();
+
+    axios.post(
+      `https://pre-onboarding-selection-task.shop/todos`,
+      {
+        todo: todoText,
+      },
+      {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      }
+    );
+  };
+
   return (
     <div>
       <div>
@@ -16,8 +34,8 @@ const Todo = () => {
         </ul>
       </div>
       <div>
-        <form>
-          <input></input>
+        <form onSubmit={createTodo}>
+          <input onChange={(el) => setTodoText(el.target.value)}></input>
           <button>추가</button>
         </form>
       </div>
