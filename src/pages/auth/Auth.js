@@ -12,6 +12,35 @@ import React, { useState } from "react";
 const Auth = () => {
   // 로그인/회원가입 탭 이동 상태
   const [select, setSelect] = useState("SignIn");
+  const [userInfo, setUserInfo] = useState({
+    email: "",
+    password: "",
+  });
+  const [validation, setValidation] = useState(false);
+
+  // 이메일 유효성 검사
+  const emailValidation = (el) => {
+    let email = el.target.value;
+    if ([...email].includes("@") && email !== "") {
+      setValidation(true);
+    } else {
+      setValidation(false);
+    }
+  };
+
+  // 비밀번호 유효성 검사
+  const pwValidation = (el) => {
+    let pw = el.target.value;
+    if (pw.length >= 8) {
+      setValidation(true);
+    } else {
+      setValidation(false);
+    }
+  };
+
+  const sumbitHandler = (e) => {
+    e.preventDefault();
+  };
 
   return (
     <div>
@@ -31,17 +60,15 @@ const Auth = () => {
           회원가입
         </span>
       </div>
-      <form>
-        <label htmlFor="email"></label>
-        <input id="email"></input>
-        <label htmlFor="password"></label>
-        <input id="password"></input>
-        {select === "SignIn" ? (
-          <button>로그인</button>
-        ) : (
-          <button>회원가입</button>
-        )}
-      </form>
+      <div>
+        <form onSubmit={sumbitHandler}>
+          <label htmlFor="email"></label>
+          <input id="email" type="email" onChange={emailValidation}></input>
+          <label htmlFor="password"></label>
+          <input id="password" type="password" onChange={pwValidation}></input>
+          <button>{select === "SignIn" ? "로그인" : "회원가입"}</button>
+        </form>
+      </div>
     </div>
   );
 };
