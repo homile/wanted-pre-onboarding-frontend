@@ -14,15 +14,17 @@ const Todo = () => {
   const createTodo = (e) => {
     e.preventDefault();
 
-    axios.post(
-      `https://pre-onboarding-selection-task.shop/todos`,
-      {
-        todo: todoText,
-      },
-      {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      }
-    );
+    axios
+      .post(
+        `https://pre-onboarding-selection-task.shop/todos`,
+        {
+          todo: todoText,
+        },
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      )
+      .then((res) => getTodos());
   };
 
   // todo list get
@@ -36,9 +38,11 @@ const Todo = () => {
 
   // todo list 삭제
   const deleteTodo = (id) => {
-    axios.delete(`https://pre-onboarding-selection-task.shop/todos/${id}`, {
-      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-    });
+    axios
+      .delete(`https://pre-onboarding-selection-task.shop/todos/${id}`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      })
+      .then((res) => getTodos());
   };
 
   // 수정 버튼 클릭
@@ -57,6 +61,7 @@ const Todo = () => {
         }
       )
       .then((res) => {
+        getTodos();
         setModify({ isModify: false });
       });
   };
