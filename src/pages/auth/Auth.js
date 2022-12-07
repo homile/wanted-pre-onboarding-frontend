@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState } from "react";
 
 /**
@@ -11,7 +12,7 @@ import React, { useState } from "react";
 
 const Auth = () => {
   // 로그인/회원가입 탭 이동 상태
-  const [select, setSelect] = useState("SignIn");
+  const [select, setSelect] = useState("signin");
   const [userInfo, setUserInfo] = useState({
     email: "",
     password: "",
@@ -21,6 +22,7 @@ const Auth = () => {
   // 이메일 유효성 검사
   const emailValidation = (el) => {
     let email = el.target.value;
+    setUserInfo({ ...userInfo, email: email });
     if ([...email].includes("@") && email !== "") {
       setValidation(true);
     } else {
@@ -31,6 +33,7 @@ const Auth = () => {
   // 비밀번호 유효성 검사
   const pwValidation = (el) => {
     let pw = el.target.value;
+    setUserInfo({ ...userInfo, password: pw });
     if (pw.length >= 8) {
       setValidation(true);
     } else {
@@ -40,6 +43,23 @@ const Auth = () => {
 
   const sumbitHandler = (e) => {
     e.preventDefault();
+
+    if (select === "signin") {
+      return axios
+        .post(
+          `https://pre-onboarding-selection-task.shop/auth/${select}`,
+          userInfo
+        )
+        .then((res) => {
+          const { access_token } = res.data;
+          localStorage.setItem("token", access_token);
+        });
+    } else {
+      return axios.post(
+        `https://pre-onboarding-selection-task.shop/auth/${select}`,
+        userInfo
+      );
+    }
   };
 
   return (
@@ -47,14 +67,14 @@ const Auth = () => {
       <div>
         <span
           onClick={() => {
-            setSelect("SignIn");
+            setSelect("signin");
           }}
         >
           로그인
         </span>
         <span
           onClick={() => {
-            setSelect("SignUp");
+            setSelect("signup");
           }}
         >
           회원가입
@@ -66,7 +86,9 @@ const Auth = () => {
           <input id="email" type="email" onChange={emailValidation}></input>
           <label htmlFor="password"></label>
           <input id="password" type="password" onChange={pwValidation}></input>
-          <button>{select === "SignIn" ? "로그인" : "회원가입"}</button>
+          <button disabled={!validation}>
+            {select === "signin" ? "로그인" : "회원가입"}
+          </button>
         </form>
       </div>
     </div>
