@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 /**
   '/' 경로에 로그인 / 회원가입 기능 개발
@@ -11,6 +12,7 @@ import React, { useState } from "react";
  */
 
 const Auth = () => {
+  const navigate = useNavigate();
   // 로그인/회원가입 탭 이동 상태
   const [select, setSelect] = useState("signin");
   const [userInfo, setUserInfo] = useState({
@@ -53,6 +55,7 @@ const Auth = () => {
         .then((res) => {
           const { access_token } = res.data;
           localStorage.setItem("token", access_token);
+          navigate("/todo");
         });
     } else {
       return axios.post(
