@@ -1,70 +1,40 @@
-# Getting Started with Create React App
+# wanted-pre-onboarding-frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+wanted-pre-onboarding-frontend 조민우
 
-## Available Scripts
+## 프로젝트 실행 방법
 
-In the project directory, you can run:
+```
+라이브러리 설치
+npm i & npm install
 
-### `npm start`
+실행
+npm run start & npm start
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 데모영상
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+<p align=center>
+  <img src="https://user-images.githubusercontent.com/56163157/206439828-5b0c4336-d3f2-4df2-be18-6dbf93766ee2.gif" alt="데모영상">
+</p>
 
-### `npm test`
+## 배포링크
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+[원티드 프리온보딩 프론트엔드 사전과제 배포링크](https://wanted-pre-onboarding-min.netlify.app/)
 
-### `npm run build`
+## git branch & commit
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- branch
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+  - main: 메인 배포
+  - dev: 개발
+  - feature/auth: 로그인/회원가입 기능 및 디자인 구현
+  - feature/todo: Todo List 기능 및 디자인 구현
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- commit
+  - feat: 기능 구현
+  - fix: 기능 수정
+  - style: 디자인 구현
+  - chore: 파일 삭제 및 코드 정리
+  - docs: 문서 수정
+  - refactore: 코드리팩토링
