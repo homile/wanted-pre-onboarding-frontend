@@ -100,6 +100,7 @@ const Todo = () => {
               <List key={el.id}>
                 <input
                   type="checkbox"
+                  id={el.id}
                   onClick={() => checkHandler(el.id, el.isCompleted, el.todo)}
                   checked={el.isCompleted}
                 ></input>
@@ -111,7 +112,9 @@ const Todo = () => {
                     }
                   ></ListInput>
                 ) : (
-                  <ListLabel completed={el.isCompleted}>{el.todo}</ListLabel>
+                  <ListLabel htmlFor={el.id} completed={el.isCompleted}>
+                    {el.todo}
+                  </ListLabel>
                 )}
                 {modify.isModify || modify.id === el.id ? (
                   <>
