@@ -111,7 +111,7 @@ const Todo = () => {
                     }
                   ></ListInput>
                 ) : (
-                  <ListLabel>{el.todo}</ListLabel>
+                  <ListLabel completed={el.isCompleted}>{el.todo}</ListLabel>
                 )}
                 {modify.isModify || modify.id === el.id ? (
                   <>

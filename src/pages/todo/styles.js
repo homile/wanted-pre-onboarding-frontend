@@ -44,6 +44,7 @@ export const ListInput = styled.input`
 export const ListLabel = styled.label`
   width: 16rem;
   padding: 0 4px;
+  text-decoration: ${(props) => !props.completed || "line-through"} red;
 `;
 
 export const ListButton = styled.button`
@@ -82,10 +83,11 @@ export const Input = styled.input`
 `;
 
 export const SubmitButton = styled.button`
-  height: 2.23rem;
+  height: 2.25rem;
   width: 20%;
   padding: 0 1rem;
   background: #339af0;
+  border: 1px solid #74c0fc;
   color: white;
   font-size: 1rem;
   cursor: pointer;
