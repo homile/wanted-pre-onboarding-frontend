@@ -1,5 +1,19 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { Container } from "../../components/ui/Container";
+import {
+  Form,
+  FormContainer,
+  Input,
+  List,
+  ListButton,
+  ListContainer,
+  ListInput,
+  ListLabel,
+  SubmitButton,
+  Title,
+  UList,
+} from "./styles";
 
 const Todo = () => {
   const [todoText, setTodoText] = useState("");
@@ -71,53 +85,59 @@ const Todo = () => {
   }, []);
 
   return (
-    <div>
-      <div>
-        <h2>Todo List</h2>
-      </div>
-      <div>
-        <ul>
+    <Container>
+      <Title>
+        <h1>Todo List</h1>
+      </Title>
+      <ListContainer>
+        <UList>
           {todoList.map((el) => {
             return (
-              <li key={el.id}>
+              <List key={el.id}>
                 <input type="checkbox"></input>
                 {modify.isModify || modify.id === el.id ? (
-                  <input
+                  <ListInput
                     defaultValue={el.todo}
                     onChange={(e) =>
                       setModify({ ...modify, todo: e.target.value })
                     }
-                  ></input>
+                  ></ListInput>
                 ) : (
-                  <label>{el.todo}</label>
+                  <ListLabel>{el.todo}</ListLabel>
                 )}
                 {modify.isModify || modify.id === el.id ? (
                   <>
-                    <button onClick={() => setModify({ isModify: false })}>
+                    <ListButton onClick={() => setModify({ isModify: false })}>
                       취소
-                    </button>
-                    <button onClick={() => updateTodo(el.id, el.isCompleted)}>
+                    </ListButton>
+                    <ListButton
+                      onClick={() => updateTodo(el.id, el.isCompleted)}
+                    >
                       저장
-                    </button>
+                    </ListButton>
                   </>
                 ) : (
                   <>
-                    <button onClick={() => modifyHandler(el.id)}>수정</button>
-                    <button onClick={() => deleteTodo(el.id)}>삭제</button>
+                    <ListButton onClick={() => modifyHandler(el.id)}>
+                      수정
+                    </ListButton>
+                    <ListButton onClick={() => deleteTodo(el.id)}>
+                      삭제
+                    </ListButton>
                   </>
                 )}
-              </li>
+              </List>
             );
           })}
-        </ul>
-      </div>
-      <div>
-        <form onSubmit={createTodo}>
-          <input onChange={(el) => setTodoText(el.target.value)}></input>
-          <button>추가</button>
-        </form>
-      </div>
-    </div>
+        </UList>
+      </ListContainer>
+      <FormContainer>
+        <Form onSubmit={createTodo}>
+          <Input onChange={(el) => setTodoText(el.target.value)}></Input>
+          <SubmitButton>추가</SubmitButton>
+        </Form>
+      </FormContainer>
+    </Container>
   );
 };
 
