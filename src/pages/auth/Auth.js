@@ -1,6 +1,17 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Container } from "../../components/ui/Container";
+import {
+  Button,
+  Form,
+  FormContainer,
+  Input,
+  InputLabel,
+  Tab,
+  TabSignIn,
+  TabSignUp,
+} from "./styles";
 
 /**
   '/' 경로에 로그인 / 회원가입 기능 개발
@@ -66,35 +77,37 @@ const Auth = () => {
   };
 
   return (
-    <div>
-      <div>
-        <span
+    <Container>
+      <Tab>
+        <TabSignIn
           onClick={() => {
             setSelect("signin");
           }}
+          select={select}
         >
           로그인
-        </span>
-        <span
+        </TabSignIn>
+        <TabSignUp
           onClick={() => {
             setSelect("signup");
           }}
+          select={select}
         >
           회원가입
-        </span>
-      </div>
-      <div>
-        <form onSubmit={sumbitHandler}>
-          <label htmlFor="email"></label>
-          <input id="email" type="email" onChange={emailValidation}></input>
-          <label htmlFor="password"></label>
-          <input id="password" type="password" onChange={pwValidation}></input>
-          <button disabled={!validation}>
+        </TabSignUp>
+      </Tab>
+      <FormContainer>
+        <Form onSubmit={sumbitHandler}>
+          <InputLabel htmlFor="email">이메일</InputLabel>
+          <Input id="email" type="email" onChange={emailValidation}></Input>
+          <InputLabel htmlFor="password">비밀번호</InputLabel>
+          <Input id="password" type="password" onChange={pwValidation}></Input>
+          <Button disabled={!validation}>
             {select === "signin" ? "로그인" : "회원가입"}
-          </button>
-        </form>
-      </div>
-    </div>
+          </Button>
+        </Form>
+      </FormContainer>
+    </Container>
   );
 };
 
