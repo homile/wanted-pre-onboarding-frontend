@@ -65,19 +65,23 @@ const Todo = () => {
   };
 
   // todo list 수정
-  const updateTodo = (id, isCompleted) => {
+  const updateTodo = (id, isCompleted, todo) => {
     axios
       .put(
         `https://pre-onboarding-selection-task.shop/todos/${id}`,
-        { todo: modify.todo, isCompleted },
+        { todo: todo === undefined ? modify.todo : todo, isCompleted },
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         }
       )
-      .then((res) => {
+      .then(() => {
         getTodos();
         setModify({ isModify: false });
       });
+  };
+
+  const checkHandler = (id, isCompleted, todo) => {
+    updateTodo(id, !isCompleted, todo);
   };
 
   useEffect(() => {
@@ -94,7 +98,11 @@ const Todo = () => {
           {todoList.map((el) => {
             return (
               <List key={el.id}>
-                <input type="checkbox"></input>
+                <input
+                  type="checkbox"
+                  onClick={() => checkHandler(el.id, el.isCompleted, el.todo)}
+                  checked={el.isCompleted}
+                ></input>
                 {modify.isModify || modify.id === el.id ? (
                   <ListInput
                     defaultValue={el.todo}
