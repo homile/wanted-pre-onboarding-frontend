@@ -1,4 +1,5 @@
 import React from "react";
+import { deleteTodo, updateTodo } from "../../apis/todoApi";
 import {
   List,
   ListButton,
@@ -6,46 +7,54 @@ import {
   ListLabel,
 } from "../../pages/todo/styles";
 
-const TodoList = (props) => {
+const TodoList = ({
+  id,
+  isCompleted,
+  todo,
+  setModify,
+  modify,
+  checkHandler,
+  modifyHandler,
+  setTodoList,
+}) => {
+  const saveHandler = () => {
+    updateTodo(id, isCompleted, modify.todo).then((res) =>
+      setTodoList(res.data)
+    );
+    setModify({ isModify: false });
+  };
+
   return (
-    <List key={props.id}>
+    <List key={id}>
       <input
         type="checkbox"
-        id={props.id}
-        onClick={() =>
-          props.checkHandler(props.id, props.isCompleted, props.todo)
-        }
-        checked={props.isCompleted}
+        id={id}
+        onClick={() => checkHandler(id, isCompleted, todo)}
+        checked={isCompleted}
       ></input>
-      {props.modify.isModify || props.modify.id === props.id ? (
+      {modify.isModify || modify.id === id ? (
         <ListInput
-          defaultValue={props.todo}
-          onChange={(e) =>
-            props.setModify({ ...props.modify, todo: e.target.value })
-          }
+          defaultValue={todo}
+          onChange={(e) => setModify({ ...modify, todo: e.target.value })}
         ></ListInput>
       ) : (
-        <ListLabel htmlFor={props.id} completed={props.isCompleted}>
-          {props.todo}
+        <ListLabel htmlFor={id} completed={isCompleted}>
+          {todo}
         </ListLabel>
       )}
-      {props.modify.isModify || props.modify.id === props.id ? (
+      {modify.isModify || modify.id === id ? (
         <>
-          <ListButton onClick={() => props.setModify({ isModify: false })}>
+          <ListButton onClick={() => setModify({ isModify: false })}>
             취소
           </ListButton>
-          <ListButton
-            onClick={() => props.updateTodo(props.id, props.isCompleted)}
-          >
-            저장
-          </ListButton>
+          <ListButton onClick={saveHandler}>저장</ListButton>
         </>
       ) : (
         <>
-          <ListButton onClick={() => props.modifyHandler(props.id)}>
-            수정
-          </ListButton>
-          <ListButton onClick={() => props.deleteTodo(props.id)}>
+          <ListButton onClick={() => modifyHandler(id)}>수정</ListButton>
+          <ListButton
+            onClick={() => deleteTodo(id).then((res) => setTodoList(res.data))}
+          >
             삭제
           </ListButton>
         </>
