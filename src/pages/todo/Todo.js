@@ -1,15 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import TodoList from "../../components/todo/TodoList";
 import { Container } from "../../components/ui/Container";
 import {
   Form,
   FormContainer,
   Input,
-  List,
-  ListButton,
   ListContainer,
-  ListInput,
-  ListLabel,
   SubmitButton,
   Title,
   UList,
@@ -97,47 +94,17 @@ const Todo = () => {
         <UList>
           {todoList.map((el) => {
             return (
-              <List key={el.id}>
-                <input
-                  type="checkbox"
-                  id={el.id}
-                  onClick={() => checkHandler(el.id, el.isCompleted, el.todo)}
-                  checked={el.isCompleted}
-                ></input>
-                {modify.isModify || modify.id === el.id ? (
-                  <ListInput
-                    defaultValue={el.todo}
-                    onChange={(e) =>
-                      setModify({ ...modify, todo: e.target.value })
-                    }
-                  ></ListInput>
-                ) : (
-                  <ListLabel htmlFor={el.id} completed={el.isCompleted}>
-                    {el.todo}
-                  </ListLabel>
-                )}
-                {modify.isModify || modify.id === el.id ? (
-                  <>
-                    <ListButton onClick={() => setModify({ isModify: false })}>
-                      취소
-                    </ListButton>
-                    <ListButton
-                      onClick={() => updateTodo(el.id, el.isCompleted)}
-                    >
-                      저장
-                    </ListButton>
-                  </>
-                ) : (
-                  <>
-                    <ListButton onClick={() => modifyHandler(el.id)}>
-                      수정
-                    </ListButton>
-                    <ListButton onClick={() => deleteTodo(el.id)}>
-                      삭제
-                    </ListButton>
-                  </>
-                )}
-              </List>
+              <TodoList
+                id={el.id}
+                isCompleted={el.isCompleted}
+                todo={el.todo}
+                setModify={setModify}
+                modify={modify}
+                checkHandler={checkHandler}
+                modifyHandler={modifyHandler}
+                updateTodo={updateTodo}
+                deleteTodo={deleteTodo}
+              />
             );
           })}
         </UList>
