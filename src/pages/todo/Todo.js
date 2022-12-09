@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { createTodo, getTodos, updateTodo } from "../../apis/todoApi";
 import TodoList from "../../components/todo/TodoList";
@@ -29,11 +28,13 @@ const Todo = () => {
 
   // 체크박스 완료여부 전송
   const checkHandler = (id, isCompleted, todo) => {
-    updateTodo(id, !isCompleted, todo);
+    updateTodo(id, !isCompleted, todo).then((res) => setTodoList(res.data));
   };
 
+  // Todo 추가
   const sumbitHandler = (e) => {
     createTodo(e, todoText).then((res) => setTodoList(res.data));
+    setTodoText("");
   };
 
   useEffect(() => {
@@ -65,7 +66,10 @@ const Todo = () => {
       </ListContainer>
       <FormContainer>
         <Form onSubmit={(e) => sumbitHandler(e)}>
-          <Input onChange={(el) => setTodoText(el.target.value)}></Input>
+          <Input
+            value={todoText}
+            onChange={(el) => setTodoText(el.target.value)}
+          ></Input>
           <SubmitButton>추가</SubmitButton>
         </Form>
       </FormContainer>
