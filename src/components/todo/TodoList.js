@@ -1,4 +1,5 @@
 import React from "react";
+import { deleteTodo, updateTodo } from "../../apis/todoApi";
 import {
   List,
   ListButton,
@@ -7,6 +8,13 @@ import {
 } from "../../pages/todo/styles";
 
 const TodoList = (props) => {
+  const saveHandler = () => {
+    updateTodo(props.id, props.isCompleted, props.modify.todo).then((res) =>
+      props.setTodoList(res.data)
+    );
+    props.setModify({ isModify: false });
+  };
+
   return (
     <List key={props.id}>
       <input
@@ -34,18 +42,18 @@ const TodoList = (props) => {
           <ListButton onClick={() => props.setModify({ isModify: false })}>
             취소
           </ListButton>
-          <ListButton
-            onClick={() => props.updateTodo(props.id, props.isCompleted)}
-          >
-            저장
-          </ListButton>
+          <ListButton onClick={saveHandler}>저장</ListButton>
         </>
       ) : (
         <>
           <ListButton onClick={() => props.modifyHandler(props.id)}>
             수정
           </ListButton>
-          <ListButton onClick={() => props.deleteTodo(props.id)}>
+          <ListButton
+            onClick={() =>
+              deleteTodo(props.id).then((res) => props.setTodoList(res.data))
+            }
+          >
             삭제
           </ListButton>
         </>
