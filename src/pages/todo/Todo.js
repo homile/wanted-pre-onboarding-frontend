@@ -1,5 +1,16 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { createTodo, getTodos, updateTodo } from "../../apis/todoApi";
+import TodoList from "../../components/todo/TodoList";
+import { Container } from "../../components/ui/Container";
+import {
+  Form,
+  FormContainer,
+  Input,
+  ListContainer,
+  SubmitButton,
+  Title,
+  UList,
+} from "./styles";
 
 const Todo = () => {
   const [todoText, setTodoText] = useState("");
@@ -10,114 +21,59 @@ const Todo = () => {
     todo: "",
   });
 
-  // todo 생성
-  const createTodo = (e) => {
-    e.preventDefault();
-
-    axios
-      .post(
-        `https://pre-onboarding-selection-task.shop/todos`,
-        {
-          todo: todoText,
-        },
-        {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        }
-      )
-      .then((res) => getTodos());
-  };
-
-  // todo list get
-  const getTodos = () => {
-    axios
-      .get(`https://pre-onboarding-selection-task.shop/todos`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      })
-      .then((res) => setTodoList(res.data));
-  };
-
-  // todo list 삭제
-  const deleteTodo = (id) => {
-    axios
-      .delete(`https://pre-onboarding-selection-task.shop/todos/${id}`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      })
-      .then((res) => getTodos());
-  };
-
   // 수정 버튼 클릭
   const modifyHandler = (id) => {
     setModify({ isModify: false, id });
   };
 
-  // todo list 수정
-  const updateTodo = (id, isCompleted) => {
-    axios
-      .put(
-        `https://pre-onboarding-selection-task.shop/todos/${id}`,
-        { todo: modify.todo, isCompleted },
-        {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        }
-      )
-      .then((res) => {
-        getTodos();
-        setModify({ isModify: false });
-      });
+  // 체크박스 완료여부 전송
+  const checkHandler = (id, isCompleted, todo) => {
+    updateTodo(id, !isCompleted, todo).then((res) => setTodoList(res.data));
+  };
+
+  // Todo 추가
+  const sumbitHandler = (e) => {
+    createTodo(e, todoText).then((res) => setTodoList(res.data));
+    setTodoText("");
   };
 
   useEffect(() => {
-    getTodos();
+    getTodos().then((res) => setTodoList(res.data));
   }, []);
 
   return (
-    <div>
-      <div>
-        <h2>Todo List</h2>
-      </div>
-      <div>
-        <ul>
+    <Container>
+      <Title>
+        <h1>Todo List</h1>
+      </Title>
+      <ListContainer>
+        <UList>
           {todoList.map((el) => {
             return (
-              <li key={el.id}>
-                <input type="checkbox"></input>
-                {modify.isModify || modify.id === el.id ? (
-                  <input
-                    defaultValue={el.todo}
-                    onChange={(e) =>
-                      setModify({ ...modify, todo: e.target.value })
-                    }
-                  ></input>
-                ) : (
-                  <label>{el.todo}</label>
-                )}
-                {modify.isModify || modify.id === el.id ? (
-                  <>
-                    <button onClick={() => setModify({ isModify: false })}>
-                      취소
-                    </button>
-                    <button onClick={() => updateTodo(el.id, el.isCompleted)}>
-                      저장
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <button onClick={() => modifyHandler(el.id)}>수정</button>
-                    <button onClick={() => deleteTodo(el.id)}>삭제</button>
-                  </>
-                )}
-              </li>
+              <TodoList
+                id={el.id}
+                isCompleted={el.isCompleted}
+                todo={el.todo}
+                setModify={setModify}
+                modify={modify}
+                checkHandler={checkHandler}
+                modifyHandler={modifyHandler}
+                setTodoList={setTodoList}
+              />
             );
           })}
-        </ul>
-      </div>
-      <div>
-        <form onSubmit={createTodo}>
-          <input onChange={(el) => setTodoText(el.target.value)}></input>
-          <button>추가</button>
-        </form>
-      </div>
-    </div>
+        </UList>
+      </ListContainer>
+      <FormContainer>
+        <Form onSubmit={(e) => sumbitHandler(e)}>
+          <Input
+            value={todoText}
+            onChange={(el) => setTodoText(el.target.value)}
+          ></Input>
+          <SubmitButton>추가</SubmitButton>
+        </Form>
+      </FormContainer>
+    </Container>
   );
 };
 
