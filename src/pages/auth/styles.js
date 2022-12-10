@@ -65,6 +65,6 @@ export const Button = styled.button`
   background: #74c0fc;
   color: white;
   font-size: 1rem;
-  cursor: pointer;
+  cursor: ${(props) => (props.check ? "pointer" : `not-allowed`)};
   margin-top: 0.8rem;
 `;
