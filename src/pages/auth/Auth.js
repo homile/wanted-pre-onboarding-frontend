@@ -36,7 +36,11 @@ const Auth = () => {
   const emailValidation = (el) => {
     let email = el.target.value;
     setUserInfo({ ...userInfo, email: email });
-    if ([...email].includes("@") && email !== "") {
+    if (
+      [...email].includes("@") &&
+      email !== "" &&
+      userInfo.password.length >= 8
+    ) {
       setValidation(true);
     } else {
       setValidation(false);
@@ -47,7 +51,11 @@ const Auth = () => {
   const pwValidation = (el) => {
     let pw = el.target.value;
     setUserInfo({ ...userInfo, password: pw });
-    if (pw.length >= 8) {
+    if (
+      pw.length >= 8 &&
+      [...userInfo.email].includes("@") &&
+      userInfo.email !== ""
+    ) {
       setValidation(true);
     } else {
       setValidation(false);
@@ -102,7 +110,7 @@ const Auth = () => {
           <Input id="email" type="email" onChange={emailValidation}></Input>
           <InputLabel htmlFor="password">비밀번호</InputLabel>
           <Input id="password" type="password" onChange={pwValidation}></Input>
-          <Button disabled={!validation}>
+          <Button disabled={!validation} check={validation}>
             {select === "signin" ? "로그인" : "회원가입"}
           </Button>
         </Form>
