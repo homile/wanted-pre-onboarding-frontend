@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container } from "../../components/ui/Container";
 import {
@@ -31,6 +31,7 @@ const Auth = () => {
     password: "",
   });
   const [validation, setValidation] = useState(false);
+  const emailRef = useRef();
 
   // 이메일 유효성 검사
   const emailValidation = (el) => {
@@ -84,6 +85,10 @@ const Auth = () => {
     }
   };
 
+  useEffect(() => {
+    emailRef.current.focus();
+  }, [select]);
+
   return (
     <Container>
       <Tab>
@@ -106,7 +111,9 @@ const Auth = () => {
       </Tab>
       <FormContainer>
         <Form onSubmit={sumbitHandler}>
-          <InputLabel htmlFor="email">이메일</InputLabel>
+          <InputLabel htmlFor="email" ref={emailRef}>
+            이메일
+          </InputLabel>
           <Input id="email" type="email" onChange={emailValidation}></Input>
           <InputLabel htmlFor="password">비밀번호</InputLabel>
           <Input id="password" type="password" onChange={pwValidation}></Input>
