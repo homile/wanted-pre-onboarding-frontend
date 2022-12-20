@@ -90,8 +90,10 @@ const Auth = () => {
             이메일
           </S.InputLabel>
           <S.Input id="email" type="email" onChange={emailValidation}></S.Input>
+          {validation || <S.ErrMsg>이메일은 @를 포함해야 합니다.</S.ErrMsg>}
           <S.InputLabel htmlFor="password">비밀번호</S.InputLabel>
           <S.Input id="password" type="password" onChange={pwValidation}></S.Input>
+          {validation || <S.ErrMsg>비밀번호는 8자 이상입니다.</S.ErrMsg>}
           <S.Button disabled={!validation} check={validation}>
             {select === "signin" ? "로그인" : "회원가입"}
           </S.Button>

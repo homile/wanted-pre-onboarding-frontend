@@ -39,7 +39,6 @@ export const FormContainer = styled.div`
   border: 2px solid #dddddd;
   border-top: 0px;
   width: 100%;
-  height: 15rem;
 `;
 
 export const Form = styled.form`
@@ -58,6 +57,12 @@ export const Input = styled.input`
   margin-bottom: 1rem;
   font-size: 1rem;
   padding: 0 1rem;
+`;
+
+export const ErrMsg = styled.span`
+  color: red;
+  font-size: 14px;
+  margin-bottom: 6px;
 `;
 
 export const Button = styled.button`
