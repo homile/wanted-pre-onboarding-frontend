@@ -16,8 +16,8 @@ export const TabSignIn = styled.span`
   height: 2.5rem;
   cursor: pointer;
 
-  background: ${(props) => props.select === "signin" && "#74c0fc"};
-  color: ${(props) => props.select === "signin" && "white"};
+  background: ${(props) => props.select === "signin" && "#155FE9"};
+  color: ${(props) => props.select === "signin" && "#FFFFFF"};
 `;
 
 export const TabSignUp = styled.span`
@@ -28,8 +28,8 @@ export const TabSignUp = styled.span`
   height: 2.5rem;
   cursor: pointer;
 
-  background: ${(props) => props.select === "signup" && "#74c0fc"};
-  color: ${(props) => props.select === "signup" && "white"};
+  background: ${(props) => props.select === "signup" && "#155FE9"};
+  color: ${(props) => props.select === "signup" && "#FFFFFF"};
 `;
 
 export const FormContainer = styled.div`
@@ -62,9 +62,10 @@ export const Input = styled.input`
 
 export const Button = styled.button`
   height: 2rem;
-  background: #74c0fc;
-  color: white;
+  color: #ffffff;
   font-size: 1rem;
+  border: none;
+  background: ${(props) => (props.check ? "#155FE9" : "#74c0fc")};
   cursor: ${(props) => (props.check ? "pointer" : `not-allowed`)};
   margin-top: 0.8rem;
 `;
