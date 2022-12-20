@@ -2,16 +2,7 @@ import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container } from "../../components/ui/Container";
-import {
-  Button,
-  Form,
-  FormContainer,
-  Input,
-  InputLabel,
-  Tab,
-  TabSignIn,
-  TabSignUp,
-} from "./styles";
+import * as S from "./styles";
 
 /**
   '/' 경로에 로그인 / 회원가입 기능 개발
@@ -37,11 +28,7 @@ const Auth = () => {
   const emailValidation = (el) => {
     let email = el.target.value;
     setUserInfo({ ...userInfo, email: email });
-    if (
-      [...email].includes("@") &&
-      email !== "" &&
-      userInfo.password.length >= 8
-    ) {
+    if ([...email].includes("@") && email !== "" && userInfo.password.length >= 8) {
       setValidation(true);
     } else {
       setValidation(false);
@@ -52,11 +39,7 @@ const Auth = () => {
   const pwValidation = (el) => {
     let pw = el.target.value;
     setUserInfo({ ...userInfo, password: pw });
-    if (
-      pw.length >= 8 &&
-      [...userInfo.email].includes("@") &&
-      userInfo.email !== ""
-    ) {
+    if (pw.length >= 8 && [...userInfo.email].includes("@") && userInfo.email !== "") {
       setValidation(true);
     } else {
       setValidation(false);
@@ -67,21 +50,13 @@ const Auth = () => {
     e.preventDefault();
 
     if (select === "signin") {
-      return axios
-        .post(
-          `https://pre-onboarding-selection-task.shop/auth/${select}`,
-          userInfo
-        )
-        .then((res) => {
-          const { access_token } = res.data;
-          localStorage.setItem("token", access_token);
-          navigate("/todo");
-        });
+      return axios.post(`https://pre-onboarding-selection-task.shop/auth/${select}`, userInfo).then((res) => {
+        const { access_token } = res.data;
+        localStorage.setItem("token", access_token);
+        navigate("/todo");
+      });
     } else {
-      return axios.post(
-        `https://pre-onboarding-selection-task.shop/auth/${select}`,
-        userInfo
-      );
+      return axios.post(`https://pre-onboarding-selection-task.shop/auth/${select}`, userInfo);
     }
   };
 
@@ -91,37 +66,39 @@ const Auth = () => {
 
   return (
     <Container>
-      <Tab>
-        <TabSignIn
+      <S.Tab>
+        <S.TabSignIn
           onClick={() => {
             setSelect("signin");
           }}
           select={select}
         >
           로그인
-        </TabSignIn>
-        <TabSignUp
+        </S.TabSignIn>
+        <S.TabSignUp
           onClick={() => {
             setSelect("signup");
           }}
           select={select}
         >
           회원가입
-        </TabSignUp>
-      </Tab>
-      <FormContainer>
-        <Form onSubmit={sumbitHandler}>
-          <InputLabel htmlFor="email" ref={emailRef}>
+        </S.TabSignUp>
+      </S.Tab>
+      <S.FormContainer>
+        <S.Form onSubmit={sumbitHandler}>
+          <S.InputLabel htmlFor="email" ref={emailRef}>
             이메일
-          </InputLabel>
-          <Input id="email" type="email" onChange={emailValidation}></Input>
-          <InputLabel htmlFor="password">비밀번호</InputLabel>
-          <Input id="password" type="password" onChange={pwValidation}></Input>
-          <Button disabled={!validation} check={validation}>
+          </S.InputLabel>
+          <S.Input id="email" type="email" onChange={emailValidation}></S.Input>
+          {validation || <S.ErrMsg>이메일은 @를 포함해야 합니다.</S.ErrMsg>}
+          <S.InputLabel htmlFor="password">비밀번호</S.InputLabel>
+          <S.Input id="password" type="password" onChange={pwValidation}></S.Input>
+          {validation || <S.ErrMsg>비밀번호는 8자 이상입니다.</S.ErrMsg>}
+          <S.Button disabled={!validation} check={validation}>
             {select === "signin" ? "로그인" : "회원가입"}
-          </Button>
-        </Form>
-      </FormContainer>
+          </S.Button>
+        </S.Form>
+      </S.FormContainer>
     </Container>
   );
 };
