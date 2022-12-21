@@ -6,10 +6,10 @@ wanted-pre-onboarding-frontend 조민우
 
 ```
 라이브러리 설치
-npm i & npm install
+npm i or npm install
 
 실행
-npm run start & npm start
+npm run start or npm start
 ```
 
 ## 데모영상
